@@ -1,6 +1,7 @@
 package modelo;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 public class Datos {
@@ -49,8 +50,46 @@ public class Datos {
 	/**
 	 * coge las dos pilas y las deja del mismo tamaño
 	 */
-	public void EquilibrarPila() {
+	public void equilibrarPilas() {
+		int largo= 0;
+		//largo va bien
+		largo= (this.pilaUno.getPila().size()+this.pilaDos.getPila().size())/2;
+		//pilaParcial se rellena bien
+		LinkedList<Colores> pilaParcial= new LinkedList<Colores>();
+		rellenarPilaParcial(pilaParcial);
+		System.out.println("Pila parcial antes de quitar"+pilaParcial);
+		System.out.println("PilaUno al rellenar pilaParcial: "+this.pilaUno.getPila().toString());
+		System.out.println("PilaDos al rellenar pilaParcial: "+this.pilaDos.getPila().toString());
+		rellenarDeNuevoPilas(pilaParcial, largo);
+		System.out.println("Pila parcial despues de quitar las cosas: ");
+		System.out.println("pila uno: "+this.pilaUno.getPila().toString());
+		System.out.println("pila dos: "+this.pilaDos.getPila().toString());
+		
+		
+	}
+	private void rellenarDeNuevoPilas(LinkedList<Colores>pilaParcial,int largo){
+		int numeroParcial=0;
+		for (Iterator iterator = pilaParcial.iterator(); iterator.hasNext();) {
+			Colores color = (Colores) iterator.next();
+			if(numeroParcial<=largo){
+				this.pilaUno.apilar(color);
+				
+			}
+			else{
+				this.pilaDos.apilar(color);
+			}
+			numeroParcial++;
+		}
+	}
+	
+	private void rellenarPilaParcial(LinkedList<Colores>pilaParcial)
+	{
 
+		pilaParcial.addAll(this.pilaUno.getCollection());
+		pilaUno.removeCollection();
+		
+		pilaParcial.addAll(this.pilaDos.getCollection());
+		pilaUno.removeCollection();
 	}
 
 	public LinkedList<Colores> generarCola() {
